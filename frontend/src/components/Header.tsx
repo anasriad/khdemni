@@ -1,11 +1,11 @@
 export default function Header() {
     return <>
         <header>
-            <nav className=" bg-green-400 border-gray-200 px-4 lg:px-6 dark:bg-gray-800">
+            <nav className=" bg-white border-gray shadow-2xl px-4 lg:px-6 dark:bg-gray-800 border-b-2">
                 <div className="flex flex-wrap justify-between items-center max-w-screen-3xl">
                     <a href="https://flowbite.com" className="flex items-center">
                         <img src=".\src\assets\Khdemni.png" className=" w-24" alt="Flowbite Logo" />
-                        <span className="self-center text-xl font-semibold whitespace-nowrap text-white">Khdemni</span>
+                        <span className="self-center text-xl font-semibold whitespace-nowrap text-black">Khdemni</span>
                     </a>
                     <div className="flex items-center lg:order-2">
                         <a href="#" className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Log in</a>
@@ -17,7 +17,7 @@ export default function Header() {
                         </button>
                     </div>
                     <div className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
-                        <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                        <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-24 lg:mt-0">
                             {[{
                                 text: "Services",
                                 link: "#"
@@ -37,7 +37,7 @@ export default function Header() {
 
                             ].map((item) => (
                                 <li>
-                                    <a href="#" className="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white" aria-current="page">{item.text}</a>
+                                    <a href="#" className="block py-2 pr-4 pl-3 text-black font-bold rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white hover:scale-110 hover:text-green-700 hover:underline hover:underline-offset-8 hover:duration-300">{item.text}</a>
                                 </li>
                             ))}
                         </ul>
