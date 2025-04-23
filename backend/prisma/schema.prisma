@@ -1,0 +1,152 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  user_id       Int        @id @default(autoincrement()) @unique
+  full_name     String?
+  email         String     @unique
+  phone_number  String?
+  password_hash String?
+  role          Role
+  language_pref String?
+  is_verified   Boolean    @default(false)
+  created_at    DateTime   @default(now())
+  Profiles      Profiles[]
+  Jobs          Jobs[]     @relation("ClientJobs")
+  Applications  Applications[] @relation("FreelancerApplications")
+  ReviewsGiven  Reviews[]  @relation("Reviewer")
+  ReviewsReceived Reviews[] @relation("Reviewee")
+  PaymentsSent  Payments[] @relation("ClientPayments")
+  PaymentsReceived Payments[] @relation("FreelancerPayments")
+  Notifications Notifications[]
+  Freelancer_Skills Freelancer_Skills[]
+  Admins        Admins?
+}
+
+model Profiles {
+  profile_id     Int    @id @default(autoincrement())
+  user_id        Int
+  bio            String?
+  skills         String?
+  experience     String?
+  rating_avg     Float  @default(0)
+  completed_jobs Int    @default(0)
+  Users          Users  @relation(fields: [user_id], references: [user_id])
+}
+
+model Jobs {
+  job_id      Int         @id @default(autoincrement())
+  client_id   Int
+  title       String
+  description String?
+  category    String?
+  budget      Decimal
+  status      JobStatus
+  location    String?
+  created_at  DateTime    @default(now())
+  Users       Users       @relation("ClientJobs", fields: [client_id], references: [user_id])
+  Applications Applications[]
+  Payments     Payments[]
+  Reviews      Reviews[]
+  Job_Skills   Job_Skills[]
+}
+
+model Applications {
+  application_id Int       @id @default(autoincrement())
+  job_id         Int
+  freelancer_id  Int
+  message        String?
+  status         ApplicationStatus
+  applied_at     DateTime  @default(now())
+  Jobs           Jobs      @relation(fields: [job_id], references: [job_id])
+  Users          Users     @relation("FreelancerApplications", fields: [freelancer_id], references: [user_id])
+}
+
+model Payments {
+  payment_id     Int      @id @default(autoincrement())
+  job_id         Int
+  client_id      Int
+  freelancer_id  Int
+  amount         Decimal
+  status         PaymentStatus
+  method         String?
+  paid_at        DateTime?
+  Jobs           Jobs     @relation(fields: [job_id], references: [job_id])
+  Client         Users    @relation("ClientPayments", fields: [client_id], references: [user_id])
+  Freelancer     Users    @relation("FreelancerPayments", fields: [freelancer_id], references: [user_id])
+}
+
+model Reviews {
+  review_id    Int      @id @default(autoincrement())
+  job_id       Int
+  reviewer_id  Int
+  reviewee_id  Int
+  rating       Int
+  comment      String?
+  created_at   DateTime @default(now())
+  Jobs         Jobs     @relation(fields: [job_id], references: [job_id])
+  Reviewer     Users    @relation("Reviewer", fields: [reviewer_id], references: [user_id])
+  Reviewee     Users    @relation("Reviewee", fields: [reviewee_id], references: [user_id])
+}
+
+model Notifications {
+  notification_id Int     @id @default(autoincrement())
+  user_id         Int
+  type            String?
+  content         String?
+  is_read         Boolean @default(false)
+  sent_at         DateTime @default(now())
+  Users           Users   @relation(fields: [user_id], references: [user_id])
+}
+
+model Job_Skills {
+  job_id     Int
+  skill_name String
+  Jobs       Jobs @relation(fields: [job_id], references: [job_id])
+  @@id([job_id, skill_name])
+}
+
+model Freelancer_Skills {
+  freelancer_id Int
+  skill_name    String
+  Users         Users @relation(fields: [freelancer_id], references: [user_id])
+  @@id([freelancer_id, skill_name])
+}
+
+model Admins {
+  admin_id   Int    @id @default(autoincrement())
+  user_id    Int @unique
+  privileges String?
+  Users      Users  @relation(fields: [user_id], references: [user_id])
+}
+
+enum Role {
+  freelancer
+  client
+  admin
+}
+
+enum JobStatus {
+  open
+  in_progress
+  completed
+  cancelled
+}
+
+enum ApplicationStatus {
+  pending
+  accepted
+  rejected
+}
+
+enum PaymentStatus {
+  in_escrow
+  released
+  refunded
+}
