@@ -4,6 +4,7 @@ import Home from "./pages/Home"
 import Services from "./pages/Services"
 import Login from "./pages/Login"
 import Tutorials from "./pages/tutorials"
+import AboutUs from "./pages/aboutus"
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/Services" element={<Services />} />
           <Route path="/login" element={<Login />} />
           <Route path="/tutorials" element={<Tutorials />} />
+          <Route path="/aboutUs" element={<AboutUs />} />
         </Routes>
       </BrowserRouter>
     </>

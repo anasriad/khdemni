@@ -1,25 +1,24 @@
+import { Menu, X } from "lucide-react";
+import React from "react";
 import { useNavigate } from "react-router-dom"
-export default function Header() {
+const Header = () => {
+    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const Navigate = useNavigate()
-    return <>
-        <header>
-            <nav className=" bg-white border-gray shadow-2xl px-4 lg:px-6 dark:bg-gray-800 border-b-2">
-                <div className="flex flex-wrap justify-between items-center max-w-screen-3xl">
-                    <a onClick={()=>Navigate('/')} className="flex items-center">
-                        <img src=".\src\assets\Khdemni.png" className=" w-24" alt="Flowbite Logo" />
-                        <span className="self-center text-xl font-semibold whitespace-nowrap text-black">Khdemni</span>
-                    </a>
-                    <div className="flex items-center lg:order-2">
-                        <a className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800 hover:cursor-pointer" onClick={()=>Navigate('/login')}>Log in</a>
-                        <a href="#" className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">Get started</a>
-                        <button data-collapse-toggle="mobile-menu-2" type="button" className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
-                            <span className="sr-only">Open main menu</span>
-                            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-                            <svg className="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                        </button>
-                    </div>
-                    <div className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
-                        <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-24 lg:mt-0">
+    return (
+      <header className="bg-white shadow-sm">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <div className="flex items-center">
+              <span className="text-2xl font-bold text-yellow-600">Khedmni</span>
+            </div>
+            <div className="hidden md:flex items-center space-x-4">
+              <a href="/login" className="text-gray-600 hover:text-yellow-600 text-sm font-medium">Login</a>
+              <a href="/register" className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-600 transition">Register</a>
+            </div>
+            {/* Desktop Navigation */}
+            <div className="hidden justify-between items-center w-full lg:flex lg:w-auto" id="mobile-menu-2">
+                        <ul className="hidden md:flex space-x-8">
                             {[{
                                 text: "Services",
                                 link: "/Services"
@@ -34,18 +33,52 @@ export default function Header() {
                             },
                             {
                                 text: "About Us",
-                                link: "#"
+                                link: "/aboutUs"
                             }
 
                             ].map((item) => (
                                 <li>
-                                    <a onClick={() => Navigate(item.link)} className=" hover:cursor-pointer block py-2 pr-4 pl-3 text-black font-bold rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white hover:scale-110 hover:text-green-700 hover:underline hover:underline-offset-8 hover:duration-300">{item.text}</a>
+                                    <a onClick={() => Navigate(item.link)} className="text-gray-600 hover:text-yellow-600 px-3 py-2 text-base font-medium">{item.text}</a>
                                 </li>
                             ))}
                         </ul>
                     </div>
-                </div>
+            {/* Login/Register */}
+            
+            
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button 
+                onClick={() => setIsMenuOpen(!isMenuOpen)} 
+                className="text-gray-500 hover:text-yellow-600 focus:outline-none"
+              >
+                {isMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-white pb-4 px-4">
+            <nav className="flex flex-col space-y-2">
+              <a href="/" className="text-gray-600 hover:text-yellow-600 px-3 py-2 text-base font-medium">Home</a>
+              <a href="/services" className="text-gray-600 hover:text-yellow-600 px-3 py-2 text-base font-medium">Services</a>
+              <a href="/freelancers" className="text-gray-600 hover:text-yellow-600 px-3 py-2 text-base font-medium">Find Freelancers</a>
+              <a href="/about" className="text-yellow-600 font-medium px-3 py-2 text-base">About Us</a>
+              <a href="/contact" className="text-gray-600 hover:text-yellow-600 px-3 py-2 text-base font-medium">Contact</a>
+              <div className="flex flex-col space-y-2 mt-2 pt-2 border-t border-gray-200">
+                <a href="/login" className="text-gray-600 hover:text-yellow-600 px-3 py-2 text-base font-medium">Login</a>
+                <a href="/register" className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-base font-medium hover:bg-yellow-600 transition text-center">Register</a>
+              </div>
             </nav>
-        </header>
-    </>
-}
+          </div>
+        )}
+      </header>
+    );
+  };
+  export default Header
