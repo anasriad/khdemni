@@ -5,7 +5,7 @@ export default function Header() {
         <header>
             <nav className=" bg-white border-gray shadow-2xl px-4 lg:px-6 dark:bg-gray-800 border-b-2">
                 <div className="flex flex-wrap justify-between items-center max-w-screen-3xl">
-                    <a href="https://flowbite.com" className="flex items-center">
+                    <a onClick={()=>Navigate('/')} className="flex items-center">
                         <img src=".\src\assets\Khdemni.png" className=" w-24" alt="Flowbite Logo" />
                         <span className="self-center text-xl font-semibold whitespace-nowrap text-black">Khdemni</span>
                     </a>
