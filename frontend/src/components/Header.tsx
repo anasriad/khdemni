@@ -10,7 +10,7 @@ const Header = () => {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center">
-              <span className="text-2xl font-bold text-yellow-600">Khedmni</span>
+              <span className="text-2xl font-bold text-yellow-600 hover:cursor-pointer" onClick={()=>Navigate('/')}>Khedmni</span>
             </div>
             <div className="hidden md:flex items-center space-x-4">
               <a href="/login" className="text-gray-600 hover:text-yellow-600 text-sm font-medium">Login</a>
@@ -38,7 +38,7 @@ const Header = () => {
 
                             ].map((item) => (
                                 <li>
-                                    <a onClick={() => Navigate(item.link)} className="text-gray-600 hover:text-yellow-600 px-3 py-2 text-base font-medium">{item.text}</a>
+                                    <a onClick={() => Navigate(item.link)} className="text-gray-600 hover:text-yellow-600 hover:cursor-pointer  px-3 py-2 text-base font-medium">{item.text}</a>
                                 </li>
                             ))}
                         </ul>
@@ -62,22 +62,6 @@ const Header = () => {
           </div>
         </div>
         
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-white pb-4 px-4">
-            <nav className="flex flex-col space-y-2">
-              <a href="/" className="text-gray-600 hover:text-yellow-600 px-3 py-2 text-base font-medium">Home</a>
-              <a href="/services" className="text-gray-600 hover:text-yellow-600 px-3 py-2 text-base font-medium">Services</a>
-              <a href="/freelancers" className="text-gray-600 hover:text-yellow-600 px-3 py-2 text-base font-medium">Find Freelancers</a>
-              <a href="/about" className="text-yellow-600 font-medium px-3 py-2 text-base">About Us</a>
-              <a href="/contact" className="text-gray-600 hover:text-yellow-600 px-3 py-2 text-base font-medium">Contact</a>
-              <div className="flex flex-col space-y-2 mt-2 pt-2 border-t border-gray-200">
-                <a href="/login" className="text-gray-600 hover:text-yellow-600 px-3 py-2 text-base font-medium">Login</a>
-                <a href="/register" className="bg-yellow-500 text-white px-4 py-2 rounded-lg text-base font-medium hover:bg-yellow-600 transition text-center">Register</a>
-              </div>
-            </nav>
-          </div>
-        )}
       </header>
     );
   };
