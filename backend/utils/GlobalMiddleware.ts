@@ -12,7 +12,7 @@ const applyGlobalMiddlewares = (app: Express) => {
     app.use(cookieParser())
     app.use(cors({
         credentials: true,
-        origin: process.env.CLIENT_ENV_URL || 'http://localhost:5173'
+        origin: 'http://localhost:5181'
     }));
     app.use(helmet())
     app.use(Router)
