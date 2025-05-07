@@ -1,11 +1,15 @@
 import { Menu, X } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { getCurrentUser, Logout } from "../states/authSlice";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const Navigate = useNavigate();
-
+  const user = useSelector(getCurrentUser)
+  const dispatch = useDispatch()
   return (
     <header className="bg-white shadow-sm">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,8 +42,7 @@ const Header = () => {
             ))}
           </div>
 
-          {/* Right: Login/Register */}
-          <div className="hidden md:flex items-center space-x-4">
+          {!user && <div className="hidden md:flex items-center space-x-4">
             <a
               href="/login"
               className="text-gray-600 hover:text-yellow-600 text-sm font-medium"
@@ -52,7 +55,19 @@ const Header = () => {
             >
               Register
             </a>
-          </div>
+          </div>}
+          {user && <div className="hidden md:flex items-center space-x-4">
+            <a
+              onClick={() => {
+                dispatch(Logout())
+              }}
+              href="/"
+              className="text-gray-600 hover:text-yellow-600 text-sm font-medium"
+            >
+              Logout
+            </a>
+          </div>}
+
 
           {/* Mobile menu button */}
           <div className="md:hidden">
